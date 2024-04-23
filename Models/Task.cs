@@ -11,7 +11,7 @@ namespace Todo.Models
         public TaskPriority Priority { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime Deadline { get; set; }
-        public TaskStatus Status { get; set; }
+        public TaskStatus Status { get; set; } = TaskStatus.InProgress;
 
         public virtual ICollection<SubTask> SubTasks { get; set; }
         public virtual ICollection<TaskCategory> Categories { get; set; }

@@ -14,9 +14,7 @@ namespace Todo.DB
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(
-                "Data Source=todo.db");
-            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseNpgsql("Server=localhost; Port=5432; User Id=admin; Password=secret; Database=todo");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
