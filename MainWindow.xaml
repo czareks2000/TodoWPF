@@ -4,11 +4,60 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Todo"
+        xmlns:viewModel="clr-namespace:Todo.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="360,0,0,0" VerticalAlignment="Center" Click="button_Click"/>
-        <ListBox x:Name="listBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="35,75,502,170"/>
+        Title="MainWindow" Height="720" Width="1280">
 
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Lewa część - statyczny kontent -->
+        <Border BorderBrush="Black" BorderThickness="1, 1, 0, 1">
+            <Grid Grid.Column="0" 
+                  
+                  Background="White" 
+                  Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <ContentControl Grid.Row="0" Name="staticArea"
+                    Content="{Binding LeftView}"/>
+
+                <WrapPanel Grid.Row="1">
+                    <Button
+                            Margin="5" 
+                            Padding="5"
+                            Command="{Binding AddTaskViewCommand}">Add Task</Button>
+                    <Button
+                            Margin="5" 
+                            Padding="5"
+                            Command="{Binding StatsViewCommand}">Stats</Button>
+                    <Button 
+                            Margin="5" 
+                            Padding="5"
+                            Command="{Binding SettingsViewCommand}">Settings</Button>
+                </WrapPanel>
+
+            </Grid>
+        </Border>
+
+        <!-- Prawa część - zmienne widoki -->
+        <Border Grid.Column="1" 
+                BorderBrush="Black" BorderThickness="1"
+                Background="white" 
+                Padding="10">
+            
+            <ContentControl Name="dynamicArea"
+                            Content="{Binding RightView}"/>
+        </Border>
     </Grid>
 </Window>

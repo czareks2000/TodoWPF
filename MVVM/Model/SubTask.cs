@@ -1,6 +1,6 @@
-﻿using TaskStatus = Todo.Models.Enums.TaskStatus;
+﻿using TaskStatus = Todo.MVVM.Model.Enums.TaskStatus;
 
-namespace Todo.Models
+namespace Todo.MVVM.Model
 {
     public class SubTask
     {

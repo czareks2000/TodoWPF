@@ -1,4 +1,4 @@
-﻿namespace Todo.Models
+﻿namespace Todo.MVVM.Model
 {
     public class Category
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Todo.Models;
-using Task = Todo.Models.Task;
+using Todo.MVVM.Model;
+using Task = Todo.MVVM.Model.Task;
 
 namespace Todo.DB
 {

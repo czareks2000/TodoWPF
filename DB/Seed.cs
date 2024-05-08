@@ -1,7 +1,7 @@
-﻿using Todo.Models.Enums;
-using Todo.Models;
-using Task = Todo.Models.Task;
-using TaskStatus = Todo.Models.Enums.TaskStatus;
+﻿using Task = Todo.MVVM.Model.Task;
+using TaskStatus = Todo.MVVM.Model.Enums.TaskStatus;
+using Todo.MVVM.Model;
+using Todo.MVVM.Model.Enums;
 
 namespace Todo.DB
 {

@@ -1,7 +1,7 @@
-﻿using Todo.Models.Enums;
-using TaskStatus = Todo.Models.Enums.TaskStatus;
+﻿using Todo.MVVM.Model.Enums;
+using TaskStatus = Todo.MVVM.Model.Enums.TaskStatus;
 
-namespace Todo.Models
+namespace Todo.MVVM.Model
 {
     public class Task
     {

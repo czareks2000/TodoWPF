@@ -1,4 +1,4 @@
-﻿namespace Todo.Models.Enums
+﻿namespace Todo.MVVM.Model.Enums
 {
     public enum TaskStatus
     {

@@ -14,12 +14,5 @@ namespace Todo
         {
             InitializeComponent();
         }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            Seed.SeedData(_context);
-
-            listBox.Items.Add(_context.Categories.First().Name);
-        }
     }
 }
