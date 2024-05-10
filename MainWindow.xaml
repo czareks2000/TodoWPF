@@ -45,6 +45,9 @@
                             Margin="5" 
                             Padding="5"
                             Command="{Binding SettingsViewCommand}">Settings</Button>
+                    <Button 
+                            Margin="5" 
+                            Padding="5">Export</Button>
                 </WrapPanel>
 
             </Grid>

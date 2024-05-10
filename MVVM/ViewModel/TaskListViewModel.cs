@@ -1,11 +1,18 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Todo.Core;
+using Todo.DB;
+using Task = Todo.MVVM.Model.Task;
 
 namespace Todo.MVVM.ViewModel
 {
     public class TaskListViewModel : ObservableObject
     {
         private MainViewModel _mainViewModel;
+        private DataContext _dataContext;
+
+        // Tworzenie kolekcji na potrzeby ListView
+        public ObservableCollection<Task> Tasks { get; set; }
 
         // Komendy
         public ICommand ShowDetailsCommand { get; private set; }
@@ -14,10 +21,14 @@ namespace Todo.MVVM.ViewModel
         public TaskListViewModel(MainViewModel mainViewModel)
         {
             _mainViewModel = mainViewModel;
+            _dataContext = new DataContext();
 
             // Inicjalizacja komend
             ShowDetailsCommand = new RelayCommand(ShowDetails);
             ShowEditTaskCommand = new RelayCommand(ShowEditTask);
+
+            // Inicjalizacja kolekcji
+            Tasks = new ObservableCollection<Task>([.. _dataContext.Tasks]);
         }
 
         // Metoda wywoływana po naciśnięciu przycisku "Details"
