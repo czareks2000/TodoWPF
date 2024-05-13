@@ -17,7 +17,7 @@ namespace Todo.MVVM.ViewModel
             {
                 new ColumnSeries
                 {
-                    Title = "Category",
+                    Title = "Kategoria",
                     Values = new ChartValues<int> { 10, 20, 15 } // Przykładowe liczby zadań dla różnych kategorii
                 }
             };
@@ -27,13 +27,13 @@ namespace Todo.MVVM.ViewModel
             {
                 new PieSeries
                 {
-                    Title = "Completed",
+                    Title = "Ukończone",
                     Values = new ChartValues<double> { 70 }, // Przykładowy procent wykonanych zadań
                     DataLabels = true
                 },
                 new PieSeries
                 {
-                    Title = "Not Completed",
+                    Title = "Nieukończone",
                     Values = new ChartValues<double> { 30 }, // Przykładowy procent niezakończonych zadań
                     DataLabels = true
                 }

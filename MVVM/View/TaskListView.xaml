@@ -24,10 +24,10 @@
             </Grid.ColumnDefinitions>
             
             <!-- Search TextBox -->
-            <TextBox Grid.Column="0" Margin="0, 0, 10, 0" Text=""/>
+            <TextBox Style="{StaticResource NewTextBox}" Grid.Column="0" Margin="0, 0, 10, 0" Text=""/>
 
             <!-- Search Button -->
-            <Button Grid.Column="1" Width="50" Content="Search"/>
+            <Button Style="{StaticResource BlueButton}" Background="LightGray" Grid.Column="1" Width="50" Content="Szukaj"/>
         </Grid>
 
         <!-- Filters -->
@@ -41,25 +41,27 @@
 
             <!-- Category Filter -->
             <ComboBox Grid.Column="0" Margin="0,0,10,0">
-                <ComboBoxItem Content="All" IsSelected="True"/>
-                <ComboBoxItem Content="Category 1"/>
-                <ComboBoxItem Content="Category 2"/>
+                <ComboBoxItem Content="Wszystkie" IsSelected="True"/>
+                <ComboBoxItem Content="Praca"/>
+                <ComboBoxItem Content="Dom"/>
+                <ComboBoxItem Content="Szkoła"/>
+                <ComboBoxItem Content="Inne"/>
                 <!-- Add more categories as needed -->
             </ComboBox>
 
             <!-- Completion Status Filter -->
             <ComboBox Grid.Column="1"  Margin="0,0,10,0">
-                <ComboBoxItem Content="All" IsSelected="True"/>
-                <ComboBoxItem Content="Completed"/>
-                <ComboBoxItem Content="Not Completed"/>
+                <ComboBoxItem Content="Wszystkie" IsSelected="True"/>
+                <ComboBoxItem Content="Ukończone"/>
+                <ComboBoxItem Content="Nieukończone"/>
             </ComboBox>
 
             <!-- Priority Filter -->
             <ComboBox Grid.Column="2" Margin="0,0,10,0">
-                <ComboBoxItem Content="All" IsSelected="True"/>
-                <ComboBoxItem Content="High"/>
-                <ComboBoxItem Content="Medium"/>
-                <ComboBoxItem Content="Low"/>
+                <ComboBoxItem Content="Wszystkie" IsSelected="True"/>
+                <ComboBoxItem Content="Wysoki"/>
+                <ComboBoxItem Content="Średni"/>
+                <ComboBoxItem Content="Niski"/>
             </ComboBox>
 
             <!-- Deadline Filter -->
@@ -68,12 +70,12 @@
         </Grid>
 
         <!-- List View to display tasks -->
-        <ListView Grid.Row="2" Margin="10" ItemsSource="{Binding Tasks}" d:ItemsSource="{d:SampleData}">
+        <ListView Background="#f5f9ff" Grid.Row="2" Margin="10" ItemsSource="{Binding Tasks}" d:ItemsSource="{d:SampleData}">
             <ListView.View>
                 <!-- Define columns for task properties -->
                 <GridView>
                     <!-- Checkbox column -->
-                    <GridViewColumn Width="Auto" Header="Completed">
+                    <GridViewColumn Width="Auto" Header="Ukończone">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding IsCompleted}" />
@@ -82,17 +84,18 @@
                     </GridViewColumn>
 
                     <!-- Task Name column -->
-                    <GridViewColumn Header="Task" DisplayMemberBinding="{Binding Name}" Width="150" />
+                    <GridViewColumn Header="Zadanie" DisplayMemberBinding="{Binding Name}" Width="150" />
 
                     <!-- Priority column -->
-                    <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" Width="100" />
+                    <GridViewColumn Header="Priorytet" DisplayMemberBinding="{Binding Priority}" Width="100" />
 
                     <!-- Edit button column -->
                     <GridViewColumn Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit"
-                                        Width="50"
+                                <Button 
+                                        Style="{StaticResource BlueButton}"
+                                        Content="Edycja"
                                         Command="{Binding DataContext.ShowEditTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -102,8 +105,9 @@
                     <GridViewColumn Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Details"
-                                        Width="50"
+                                <Button 
+                                        Style="{StaticResource BlueButton}"
+                                        Content="Szczegóły"
                                         Command="{Binding DataContext.ShowDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

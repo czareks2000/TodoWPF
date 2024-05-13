@@ -7,7 +7,12 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/ButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/TextBoxTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            
             <DataTemplate DataType="{x:Type viewModel:TaskListViewModel}">
                 <view:TaskListView/>
             </DataTemplate>

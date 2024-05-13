@@ -21,12 +21,12 @@
                     Series="{Binding TaskCountSeries}" 
                     LegendLocation="Bottom"
                     Margin="20"
-                    >
+                    FontWeight="DemiBold">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Category" />
+                    <lvc:Axis Title="Kategoria" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Number of Tasks" />
+                    <lvc:Axis Title="Liczba zadań" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
 
@@ -34,7 +34,8 @@
             <lvc:PieChart Grid.Row="1"
                           Series="{Binding CompletionSeries}" 
                           LegendLocation="Right"
-                          Margin="20">
+                          Margin="20"
+                          FontWeight="DemiBold">
             </lvc:PieChart>
             
         </Grid>

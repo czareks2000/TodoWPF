@@ -32,22 +32,18 @@
                 <ContentControl Grid.Row="0" Name="staticArea"
                     Content="{Binding LeftView}"/>
 
-                <WrapPanel Grid.Row="1">
-                    <Button
-                            Margin="5" 
-                            Padding="5"
-                            Command="{Binding AddTaskViewCommand}">Add Task</Button>
-                    <Button
-                            Margin="5" 
-                            Padding="5"
-                            Command="{Binding StatsViewCommand}">Stats</Button>
+                <WrapPanel Grid.Row="1"  >
                     <Button 
-                            Margin="5" 
-                            Padding="5"
-                            Command="{Binding SettingsViewCommand}">Settings</Button>
+                            Command="{Binding AddTaskViewCommand}"
+                            Style="{StaticResource BlueButton}">Dodaj zadanie</Button>
+                    <Button
+                            Command="{Binding StatsViewCommand}"
+                            Style="{StaticResource BlueButton}">Statystyki</Button>
                     <Button 
-                            Margin="5" 
-                            Padding="5">Export</Button>
+                            Command="{Binding SettingsViewCommand}"
+                            Style="{StaticResource BlueButton}">Ustawienia</Button>
+                    <Button 
+                            Style="{StaticResource BlueButton}">Pobierz</Button>
                 </WrapPanel>
 
             </Grid>
