@@ -40,28 +40,18 @@
             </Grid.ColumnDefinitions>
 
             <!-- Category Filter -->
-            <ComboBox Grid.Column="0" Margin="0,0,10,0">
-                <ComboBoxItem Content="Wszystkie" IsSelected="True"/>
-                <ComboBoxItem Content="Praca"/>
-                <ComboBoxItem Content="Dom"/>
-                <ComboBoxItem Content="Szkoła"/>
-                <ComboBoxItem Content="Inne"/>
-                <!-- Add more categories as needed -->
+            <ComboBox Grid.Column="0" Margin="0,0,10,0"
+                      ItemsSource="{Binding Categories}" DisplayMemberPath="Name">
             </ComboBox>
 
             <!-- Completion Status Filter -->
-            <ComboBox Grid.Column="1"  Margin="0,0,10,0">
-                <ComboBoxItem Content="Wszystkie" IsSelected="True"/>
-                <ComboBoxItem Content="Ukończone"/>
-                <ComboBoxItem Content="Nieukończone"/>
+            <ComboBox Grid.Column="1"  Margin="0,0,10,0"
+                      ItemsSource="{Binding TaskStatuses}">
             </ComboBox>
 
             <!-- Priority Filter -->
-            <ComboBox Grid.Column="2" Margin="0,0,10,0">
-                <ComboBoxItem Content="Wszystkie" IsSelected="True"/>
-                <ComboBoxItem Content="Wysoki"/>
-                <ComboBoxItem Content="Średni"/>
-                <ComboBoxItem Content="Niski"/>
+            <ComboBox Grid.Column="2" Margin="0,0,10,0"
+                      ItemsSource="{Binding TaskPriorities}">
             </ComboBox>
 
             <!-- Deadline Filter -->

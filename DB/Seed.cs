@@ -16,7 +16,7 @@ namespace Todo.DB
             {
                 new Category { Name = "Home" },
                 new Category { Name = "Work" },
-                new Category { Name = "Shool" },
+                new Category { Name = "School" },
                 new Category { Name = "Shopping" }
             };
 

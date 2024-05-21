@@ -4,7 +4,7 @@
         x:Key="NewTextBox">
         <Setter Property="Background" Value="#f5f9ff" />
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="Padding" Value="8" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="BorderThickness" Value="1.5" />
         <Setter Property="FontSize" Value="13" />

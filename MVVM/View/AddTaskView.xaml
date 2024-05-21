@@ -3,11 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Todo.MVVM.View"
+             xmlns:local="clr-namespace:Todo.MVVM.View" 
+             xmlns:viewmodel="clr-namespace:Todo.MVVM.ViewModel" 
+             xmlns:converters="clr-namespace:Todo.MVVM.View.Converters"
+             d:DataContext="{d:DesignInstance Type=viewmodel:AddTaskViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="640">
 
-    <Grid Background="White">
+    <UserControl.Resources>
+        <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -30,58 +38,90 @@
         <!-- Nazwa zadania -->
         <StackPanel Grid.Row="1" Margin="10, 5, 10, 5"> 
             <TextBlock Margin="5, 0, 0, 10"  Text="Nazwa:" FontSize="13"/>
-            <TextBox Style="{StaticResource NewTextBox}" Name="txtName"/>
+            <TextBox Style="{StaticResource NewTextBox}" Name="txtName"
+                     Text="{Binding TaskName, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        
 
         <!-- Opis zadania -->
         <StackPanel Grid.Row="2" Margin="10, 5, 10, 5">
             <TextBlock Margin="5, 0, 0, 10" Text="Opis:" FontSize="13"/>
-            <TextBox Style="{StaticResource NewTextBox}" Name="txtDescription"/>
+            <TextBox Style="{StaticResource NewTextBox}" Name="txtDescription"
+                     Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <!-- Lista podzadań -->
-        <StackPanel Grid.Row="3" Margin="10, 5, 10, 5">
+        <StackPanel Grid.Row="3" Margin="10, 5, 10, 5" Name="stackPanelSubTasks">
             <TextBlock Margin="5, 0, 0, 10" Text="Podzadania:" FontSize="13"/>
-            <StackPanel Margin="0, 0, 0, 10" Name="stackSubtasks">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
                 <!-- Puste pole na pierwsze podzadanie -->
-                <TextBox Style="{StaticResource NewTextBox}" Name="txtSubtask"/>
+                <TextBox Grid.Column="0" Style="{StaticResource NewTextBox}" Name="txtSubtask"/>
+
                 <!-- Przycisk do dodawania kolejnych podzadań -->
                 <Button 
+                    Grid.Column="1"
                     Style="{StaticResource BlueButton}"
-                    Content="Dodaj podzadanie" Width="150"/>
-            </StackPanel>
+                    Content="Dodaj podzadanie" Width="150"
+                    Click="AddSubtask_Click"
+                    IsEnabled="{Binding Text, ElementName=txtSubtask, 
+                    Converter={StaticResource StringNotEmptyConverter}}"/>
+
+            </Grid>
+            <!-- Lista podzadań -->
+            <ItemsControl ItemsSource="{Binding Subtasks}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBox Style="{StaticResource NewTextBox}" 
+                                 Text="{Binding Path=., Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 LostFocus="SubtaskTextBox_LostFocus"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
 
         <!-- Priorytet -->
         <StackPanel Grid.Row="4" Margin="10, 5, 10, 5">
-            <TextBlock Margin="5, 0, 0, 10" Text="Priorytet:" FontSize="13"/>
-            <ComboBox Name="cmbPriority" >
-                <ComboBoxItem Content="Niski"/>
-                <ComboBoxItem Content="Średni"/>
-                <ComboBoxItem Content="Wysoki"/>
+            <TextBlock Margin="5, 0, 10, 10" Text="Priorytet:" FontSize="13"/>
+            <ComboBox Name="cmbPriority"
+                      Margin="5, 0, 10, 10"
+                    ItemsSource="{Binding TaskPriorities}"
+                    SelectedItem="{Binding SelectedPriority, UpdateSourceTrigger=PropertyChanged}">
             </ComboBox>
         </StackPanel>
 
         <!-- Kategorie -->
         <StackPanel Grid.Row="5" Margin="10, 5, 10, 5">
             <TextBlock Margin="5, 0, 0, 10" Text="Kategorie:" Grid.Row="4" FontSize="13"/>
-            <ComboBox Grid.Row="4" Name="cmbCategory">
-                <ComboBoxItem Content="Praca"/>
-                <ComboBoxItem Content="Dom"/>
-                <ComboBoxItem Content="Szkoła"/>
-                <ComboBoxItem Content="Inne"/>
-            </ComboBox>
+
+            <ItemsControl d:ItemsSource="{d:SampleData}" 
+                            ItemsSource="{Binding Categories}"
+                            Margin="5, 0, 0, 10">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                            Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
+                        </CheckBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
+        
 
         <!-- Deadline -->
         <StackPanel Grid.Row="6" Margin="10, 5, 10, 5">
             <TextBlock Margin="5, 0, 0, 10"  Text="Deadline:" Grid.Row="5" FontSize="13"/>
-            <DatePicker Grid.Row="5" Name="dpDeadline"/>
+                <DatePicker Margin="5, 0, 10, 10" Grid.Row="5" Name="dpDeadline"
+                        SelectedDate="{Binding Deadline, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <!-- Przycisk do zapisu zadania -->
-        <Button Style="{StaticResource BlueButton}"  FontWeight ="Bold" Content="Zapisz" Grid.Row="7" Margin="50" Width="150"/>
+        <Button Style="{StaticResource BlueButton}"  FontWeight="Bold" 
+                Content="Zapisz" Grid.Row="7" Margin="50" Width="150"
+                Command="{Binding SaveTaskCommand}"/>
     </Grid>
-
+    </ScrollViewer>
 </UserControl>
