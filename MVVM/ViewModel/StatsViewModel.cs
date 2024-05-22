@@ -1,40 +1,70 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
 using Todo.Core;
+using Todo.DB;
 
 namespace Todo.MVVM.ViewModel
 {
     public class StatsViewModel : ObservableObject
     {
+        private DataContext _dataContext;
 
         public SeriesCollection TaskCountSeries { get; set; }
         public SeriesCollection CompletionSeries { get; set; }
 
         public StatsViewModel()
         {
-            // Definicja danych próbkowych dla TaskCountSeries
-            TaskCountSeries = new SeriesCollection
-            {
-                new ColumnSeries
-                {
-                    Title = "Kategoria",
-                    Values = new ChartValues<int> { 10, 20, 15 } // Przykładowe liczby zadań dla różnych kategorii
-                }
-            };
+            _dataContext = new DataContext();
 
-            // Definicja danych próbkowych dla CompletionSeries
-            CompletionSeries = new SeriesCollection
+            TaskCountSeries = CalculateCompletedTaskCountByCategorySeries();
+
+            CompletionSeries = CalculateCompletionSeries();
+        }
+
+        private SeriesCollection CalculateCompletedTaskCountByCategorySeries()
+        {
+            var categoryCounts = _dataContext.Categories
+                .Select(c => new
+                {
+                    CategoryName = c.Name,
+                    CompletedTasksCount = c.Tasks.Count(t => t.Task.Status == Model.Enums.TaskStatus.Done)
+                })
+                .ToList();
+
+            var taskCountSeries = new SeriesCollection();
+
+            foreach (var count in categoryCounts)
+            {
+                taskCountSeries.Add(new ColumnSeries
+                {
+                    Title = count.CategoryName,
+                    Values = new ChartValues<int> { count.CompletedTasksCount },
+                    DataLabels = true
+                });
+            }
+
+            return taskCountSeries;
+        }
+
+        private SeriesCollection CalculateCompletionSeries()
+        {
+            int totalCount = _dataContext.Tasks.Count();
+
+            int inProgress = (int)Math.Round((double)_dataContext.Tasks.Count(t => t.Status == Model.Enums.TaskStatus.InProgress) / totalCount * 100);
+            int done = (int)Math.Round((double)_dataContext.Tasks.Count(t => t.Status == Model.Enums.TaskStatus.Done) / totalCount * 100);
+
+            return new SeriesCollection
             {
                 new PieSeries
                 {
-                    Title = "Ukończone",
-                    Values = new ChartValues<double> { 70 }, // Przykładowy procent wykonanych zadań
+                    Title = "Done",
+                    Values = new ChartValues<int> { done },
                     DataLabels = true
                 },
                 new PieSeries
                 {
-                    Title = "Nieukończone",
-                    Values = new ChartValues<double> { 30 }, // Przykładowy procent niezakończonych zadań
+                    Title = "InProgress",
+                    Values = new ChartValues<int> { inProgress },
                     DataLabels = true
                 }
             };
