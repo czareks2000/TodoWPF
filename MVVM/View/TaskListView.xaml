@@ -5,11 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Todo.MVVM.View" 
              xmlns:viewmodel="clr-namespace:Todo.MVVM.ViewModel" 
+             xmlns:converters="clr-namespace:Todo.MVVM.View.Converters"
              x:Class="Todo.MVVM.View.TaskListView" 
              d:DataContext="{d:DesignInstance Type={x:Type viewmodel:TaskListViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="640">
-
+    
+    <UserControl.Resources>
+        <converters:DateOnlyConverter x:Key="DateOnlyConverter"/>
+        <converters:TaskStatusToBoolConverter x:Key="TaskStatusToBoolConverter"/>
+    </UserControl.Resources>
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,21 +23,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            
-            <!-- Search TextBox -->
-            <TextBox Style="{StaticResource NewTextBox}" Grid.Column="0" Margin="0, 0, 10, 0" Text=""/>
-
-            <!-- Search Button -->
-            <Button Style="{StaticResource BlueButton}" Background="LightGray" Grid.Column="1" Width="50" Content="Szukaj"/>
-        </Grid>
-
         <!-- Filters -->
-        <Grid Grid.Row="1" Margin="10">
+        <Grid Grid.Row="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -40,27 +33,73 @@
             </Grid.ColumnDefinitions>
 
             <!-- Category Filter -->
-            <ComboBox Grid.Column="0" Margin="0,0,10,0"
-                      ItemsSource="{Binding Categories}" DisplayMemberPath="Name">
-            </ComboBox>
+            <StackPanel Grid.Column="0">
+                <GroupBox Header="Category">
+                    <ComboBox Margin="3" Name="CategoryFilter"
+                    ItemsSource="{Binding Categories}" DisplayMemberPath="Name"
+                    SelectedItem="{Binding SelectedCategoryFilter}">
+                    </ComboBox>
+                </GroupBox>
+            </StackPanel>
+            
 
             <!-- Completion Status Filter -->
-            <ComboBox Grid.Column="1"  Margin="0,0,10,0"
-                      ItemsSource="{Binding TaskStatuses}">
-            </ComboBox>
+            <StackPanel Grid.Column="1">
+                <GroupBox Header="Status">
+                    <ComboBox Margin="3" Name="StatusFilter"
+                        ItemsSource="{Binding TaskStatuses}"
+                        SelectedItem="{Binding SelectedStatusFilter}">
+                    </ComboBox>
+                </GroupBox>
+            </StackPanel>
+            
 
             <!-- Priority Filter -->
-            <ComboBox Grid.Column="2" Margin="0,0,10,0"
-                      ItemsSource="{Binding TaskPriorities}">
-            </ComboBox>
+            <StackPanel Grid.Column="2">
+                <GroupBox Header="Priority">
+                    <ComboBox Margin="3" Name="PriorityFilter"
+                        ItemsSource="{Binding TaskPriorities}"
+                        SelectedItem="{Binding SelectedPriorityFilter}">
+                    </ComboBox>
+                </GroupBox>
+            </StackPanel>
 
             <!-- Deadline Filter -->
-            <DatePicker Grid.Column="3" SelectedDate="{Binding SelectedDeadlineFilter}"/>
+            <StackPanel Grid.Column="3">
+                <GroupBox Header="Deadline">
+                    <DatePicker Margin="2" Name="DeadlineFilter"
+                        SelectedDate="{Binding SelectedDeadlineFilter}"/>
+                </GroupBox>
+            </StackPanel>
 
         </Grid>
 
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Search TextBox -->
+            <TextBox Name="SearchTextBox"
+                     Style="{StaticResource NewTextBox}" 
+                     Grid.Column="0" Margin="5, 0, 10, 0" 
+                     Text="{Binding SearchBoxFilter, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <!-- Reset Button -->
+            <Button Style="{StaticResource BlueButton}" 
+                    Background="LightGray"
+                    Grid.Column="1" Content="Resetuj filtry"
+                    Command="{Binding ResetFiltersCommand}"
+                    Click="ResetFilters"/>
+        </Grid>
+
         <!-- List View to display tasks -->
-        <ListView Background="#f5f9ff" Grid.Row="2" Margin="10" ItemsSource="{Binding Tasks}" d:ItemsSource="{d:SampleData}">
+        <ListView Background="#f5f9ff" Grid.Row="2" Margin="10" 
+                  ItemsSource="{Binding TasksView}" d:ItemsSource="{d:SampleData}" 
+                  SelectionChanged="TaskList_SelectionChanged"
+                  Name="TaskList">
             <ListView.View>
                 <!-- Define columns for task properties -->
                 <GridView>
@@ -68,42 +107,28 @@
                     <GridViewColumn Width="Auto" Header="Ukończone">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsCompleted}" />
+                                <CheckBox   
+                                    IsChecked="{Binding Status, 
+                                        Converter={StaticResource TaskStatusToBoolConverter}}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <!-- Task Name column -->
-                    <GridViewColumn Header="Zadanie" DisplayMemberBinding="{Binding Name}" Width="150" />
+                    <GridViewColumn Header="Zadanie" DisplayMemberBinding="{Binding Name}"/>
+
+                    <!-- Task Description column -->
+                    <GridViewColumn Header="Opis" DisplayMemberBinding="{Binding Description}"/>
 
                     <!-- Priority column -->
-                    <GridViewColumn Header="Priorytet" DisplayMemberBinding="{Binding Priority}" Width="100" />
+                    <GridViewColumn Header="Priorytet" DisplayMemberBinding="{Binding Priority}"/>
 
-                    <!-- Edit button column -->
-                    <GridViewColumn Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button 
-                                        Style="{StaticResource BlueButton}"
-                                        Content="Edycja"
-                                        Command="{Binding DataContext.ShowEditTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <!-- Deadline column -->
+                    <GridViewColumn Header="Deadline" 
+                                    DisplayMemberBinding="{
+                                        Binding Deadline, 
+                                        Converter={StaticResource DateOnlyConverter}}"/>
 
-                    <!-- Details button column -->
-                    <GridViewColumn Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button 
-                                        Style="{StaticResource BlueButton}"
-                                        Content="Szczegóły"
-                                        Command="{Binding DataContext.ShowDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                      
-                   
                 </GridView>
             </ListView.View>
         </ListView>

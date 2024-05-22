@@ -1,4 +1,5 @@
 ﻿using Todo.Core;
+using Task = Todo.MVVM.Model.Task;
 
 namespace Todo.MVVM.ViewModel
 {
@@ -20,7 +21,6 @@ namespace Todo.MVVM.ViewModel
 
         public RelayCommand AddTaskViewCommand { get; set; }
         public RelayCommand EditTaskViewCommand { get; set; }
-        public RelayCommand DetailsViewCommand { get; set; }
         public RelayCommand StatsViewCommand { get; set; }
         public RelayCommand SettingsViewCommand { get; set; }
 
@@ -46,6 +46,8 @@ namespace Todo.MVVM.ViewModel
 
             RightView = AddTaskVM;
 
+            Mediator.Instance.Register("ShowDetails", task => ShowDetails((Task)task));
+
             AddTaskViewCommand = new RelayCommand(o =>
             {
                 RightView = AddTaskVM;
@@ -54,11 +56,6 @@ namespace Todo.MVVM.ViewModel
             EditTaskViewCommand = new RelayCommand(o =>
             {
                 RightView = EditTaskVM;
-            });
-
-            DetailsViewCommand = new RelayCommand(o =>
-            {
-                RightView = DetailsVM;
             });
 
             StatsViewCommand = new RelayCommand(o =>
@@ -70,6 +67,12 @@ namespace Todo.MVVM.ViewModel
             {
                 RightView = SettingsVM;
             });
+        }
+
+        private void ShowDetails(Task task)
+        {
+            DetailsVM.SelectedTask = task;
+            RightView = DetailsVM;
         }
     }
 }

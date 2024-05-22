@@ -6,6 +6,9 @@ using Todo.MVVM.Model.Enums;
 using Todo.MVVM.Model;
 using Task = Todo.MVVM.Model.Task;
 using TaskStatus = Todo.MVVM.Model.Enums.TaskStatus;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Todo.MVVM.ViewModel
 {
@@ -13,13 +16,22 @@ namespace Todo.MVVM.ViewModel
     {
         private MainViewModel _mainViewModel;
         private DataContext _dataContext;
+        private ICollectionView _tasksView;
 
-        // Tworzenie kolekcji na potrzeby ListView
+        public ICollectionView TasksView => _tasksView;
+
         private ObservableCollection<Task> _tasks;
         public ObservableCollection<Task> Tasks
         {
             get { return _tasks; }
-            private set { _tasks = value; OnPropertyChanged(nameof(Tasks)); }
+            private set
+            {
+                _tasks = value;
+                _tasksView = CollectionViewSource.GetDefaultView(_tasks);
+                _tasksView.Filter = FilterTasks;
+                OnPropertyChanged(nameof(Tasks));
+                OnPropertyChanged(nameof(TasksView));
+            }
         }
 
         private ObservableCollection<Category> _categories;
@@ -32,9 +44,70 @@ namespace Todo.MVVM.ViewModel
         public Array TaskPriorities => Enum.GetValues(typeof(TaskPriority));
         public Array TaskStatuses => Enum.GetValues(typeof(TaskStatus));
 
+        // Filtry
+        private string _searchBoxFilter;
+        public string SearchBoxFilter
+        {
+            get { return _searchBoxFilter; }
+            set
+            {
+                _searchBoxFilter = value;
+                OnPropertyChanged(nameof(SearchBoxFilter));
+                ApplyFilter();
+            }
+        }
+
+        private Category _selectedCategoryFilter;
+        public Category SelectedCategoryFilter
+        {
+            get { return _selectedCategoryFilter; }
+            set
+            {
+                _selectedCategoryFilter = value;
+                OnPropertyChanged(nameof(SelectedCategoryFilter));
+                ApplyFilter();
+            }
+        }
+
+        private TaskStatus? _selectedStatusFilter;
+        public TaskStatus? SelectedStatusFilter
+        {
+            get { return _selectedStatusFilter; }
+            set
+            {
+                _selectedStatusFilter = value;
+                OnPropertyChanged(nameof(SelectedStatusFilter));
+                ApplyFilter();
+            }
+        }
+
+        private TaskPriority? _selectedPriorityFilter;
+        public TaskPriority? SelectedPriorityFilter
+        {
+            get { return _selectedPriorityFilter; }
+            set
+            {
+                _selectedPriorityFilter = value;
+                OnPropertyChanged(nameof(SelectedPriorityFilter));
+                ApplyFilter();
+            }
+        }
+
+        private DateTime? _selectedDeadlineFilter;
+        public DateTime? SelectedDeadlineFilter
+        {
+            get { return _selectedDeadlineFilter; }
+            set
+            {
+                _selectedDeadlineFilter = value;
+                OnPropertyChanged(nameof(SelectedDeadlineFilter));
+                ApplyFilter();
+            }
+        }
+
         // Komendy
-        public ICommand ShowDetailsCommand { get; private set; }
         public ICommand ShowEditTaskCommand { get; private set; }
+        public ICommand ResetFiltersCommand { get; private set; }
 
         public TaskListViewModel(MainViewModel mainViewModel)
         {
@@ -42,24 +115,80 @@ namespace Todo.MVVM.ViewModel
             _dataContext = new DataContext();
 
             // Inicjalizacja komend
-            ShowDetailsCommand = new RelayCommand(ShowDetails);
             ShowEditTaskCommand = new RelayCommand(ShowEditTask);
 
             // Inicjalizacja kolekcji
-            Tasks = new ObservableCollection<Task>([.. _dataContext.Tasks]);
+            Tasks = new ObservableCollection<Task>([.. _dataContext.Tasks
+                .Include(t => t.SubTasks)
+                .Include(t => t.Categories)
+                    .ThenInclude(c => c.Category)]);
             Categories = new ObservableCollection<Category>([.. _dataContext.Categories]);
+
+            Mediator.Instance.Register("AddTask", OnTaskAdded);
+
+            ResetFiltersCommand = new RelayCommand(ResetFilters);
+
+            ResetFilters(null);
         }
 
-        // Metoda wywoływana po naciśnięciu przycisku "Details"
-        private void ShowDetails(object obj)
+        public void ShowDetails(object task)
         {
-            _mainViewModel.DetailsViewCommand.Execute(null);
+            Mediator.Instance.Notify("ShowDetails", task);
         }
 
         // Metoda wywoływana po naciśnięciu przycisku "Edit Task"
         private void ShowEditTask(object obj)
         {
             _mainViewModel.EditTaskViewCommand.Execute(null);
+        }
+
+        private void OnTaskAdded(object task)
+        {
+            Tasks.Add((Task)task);
+        }
+
+        private bool FilterTasks(object obj)
+        {
+            if (obj is not Task task) return false;
+
+            if (!string.IsNullOrEmpty(SearchBoxFilter))
+            {
+                if (!task.Name.Contains(SearchBoxFilter, StringComparison.OrdinalIgnoreCase) &&
+                    !task.Description.Contains(SearchBoxFilter, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+
+            if (SelectedCategoryFilter != null &&
+                (task.Categories == null || !task.Categories.Any(c => c.CategoryId == SelectedCategoryFilter.Id)))
+                return false;
+
+            if (SelectedStatusFilter != null && task.Status != SelectedStatusFilter)
+                return false;
+
+            if (SelectedPriorityFilter != null && task.Priority != SelectedPriorityFilter)
+                return false;
+
+            if (SelectedDeadlineFilter != null && task.Deadline.Date != SelectedDeadlineFilter.Value.Date)
+                return false;
+
+            return true;
+        }
+
+        private void ApplyFilter()
+        {
+            _tasksView?.Refresh();
+        }
+
+        private void ResetFilters(object obj)
+        {
+            _searchBoxFilter = "";
+            _selectedCategoryFilter = null;
+            _selectedPriorityFilter = null;
+            _selectedStatusFilter = null;
+            _selectedDeadlineFilter = null;
+            ApplyFilter();
         }
     }
 }
