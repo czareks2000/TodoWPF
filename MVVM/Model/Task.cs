@@ -30,6 +30,5 @@ namespace Todo.MVVM.Model
 
         public virtual ICollection<SubTask> SubTasks { get; set; }
         public virtual ICollection<TaskCategory> Categories { get; set; }
-
     }
 }

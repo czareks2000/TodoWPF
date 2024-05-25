@@ -43,6 +43,7 @@
                             Command="{Binding SettingsViewCommand}"
                             Style="{StaticResource BlueButton}">Ustawienia</Button>
                     <Button 
+                            Command="{Binding ExportCommand}"
                             Style="{StaticResource BlueButton}">Export</Button>
                 </WrapPanel>
 
