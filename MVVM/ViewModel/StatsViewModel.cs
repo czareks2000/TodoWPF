@@ -9,15 +9,45 @@ namespace Todo.MVVM.ViewModel
     {
         private DataContext _dataContext;
 
-        public SeriesCollection TaskCountSeries { get; set; }
-        public SeriesCollection CompletionSeries { get; set; }
+        private SeriesCollection _taskCountSeries;
+        public SeriesCollection TaskCountSeries
+        {
+            get { return _taskCountSeries; }
+            set
+            {
+                _taskCountSeries = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SeriesCollection _completionSeries;
+        public SeriesCollection CompletionSeries
+        {
+            get { return _completionSeries; }
+            set
+            {
+                _completionSeries = value;
+                OnPropertyChanged();
+            }
+        }
 
         public StatsViewModel()
         {
             _dataContext = new DataContext();
 
-            TaskCountSeries = CalculateCompletedTaskCountByCategorySeries();
+            CaluculateValues();
 
+            Mediator.Instance.Register("RefreshStats", RefreshStats);
+        }
+
+        private void RefreshStats(object obj)
+        {
+            CaluculateValues();
+        }
+
+        private void CaluculateValues()
+        {
+            TaskCountSeries = CalculateCompletedTaskCountByCategorySeries();
             CompletionSeries = CalculateCompletionSeries();
         }
 

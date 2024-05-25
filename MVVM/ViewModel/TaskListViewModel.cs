@@ -9,6 +9,7 @@ using TaskStatus = Todo.MVVM.Model.Enums.TaskStatus;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Threading.Tasks;
 
 namespace Todo.MVVM.ViewModel
 {
@@ -156,6 +157,7 @@ namespace Todo.MVVM.ViewModel
         private void UpdateTasksList(object obj)
         {
             LoadTasks();
+            Mediator.Instance.Notify("RefreshStats", null);
         }
 
         public void ShowDetails(object task)
@@ -171,6 +173,8 @@ namespace Todo.MVVM.ViewModel
 
                 _dataContext.Tasks.Update(task);
                 _dataContext.SaveChanges();
+
+                Mediator.Instance.Notify("RefreshStats", null);
             }
         }
 
@@ -179,8 +183,6 @@ namespace Todo.MVVM.ViewModel
         {
             _mainViewModel.EditTaskViewCommand.Execute(null);
         }
-
-        
 
         private bool FilterTasks(object obj)
         {
