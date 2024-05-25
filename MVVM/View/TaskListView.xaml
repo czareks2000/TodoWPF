@@ -109,7 +109,7 @@
                             <DataTemplate>
                                 <CheckBox   
                                     IsChecked="{Binding Status, 
-                                        Converter={StaticResource TaskStatusToBoolConverter}}" />
+                                        Converter={StaticResource TaskStatusToBoolConverter}}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -26,7 +26,24 @@ namespace Todo.MVVM.ViewModel
             get { return _tasks; }
             private set
             {
+                if (_tasks != null)
+                {
+                    foreach (var task in _tasks)
+                    {
+                        task.PropertyChanged -= OnTaskPropertyChanged;
+                    }
+                }
+
                 _tasks = value;
+
+                if (_tasks != null)
+                {
+                    foreach (var task in _tasks)
+                    {
+                        task.PropertyChanged += OnTaskPropertyChanged;
+                    }
+                }
+
                 _tasksView = CollectionViewSource.GetDefaultView(_tasks);
                 _tasksView.Filter = FilterTasks;
                 OnPropertyChanged(nameof(Tasks));
@@ -118,22 +135,43 @@ namespace Todo.MVVM.ViewModel
             ShowEditTaskCommand = new RelayCommand(ShowEditTask);
 
             // Inicjalizacja kolekcji
-            Tasks = new ObservableCollection<Task>([.. _dataContext.Tasks
-                .Include(t => t.SubTasks)
-                .Include(t => t.Categories)
-                    .ThenInclude(c => c.Category)]);
+            LoadTasks();
             Categories = new ObservableCollection<Category>([.. _dataContext.Categories]);
 
-            Mediator.Instance.Register("AddTask", OnTaskAdded);
+            Mediator.Instance.Register("UpdateTasks", UpdateTasks);
 
             ResetFiltersCommand = new RelayCommand(ResetFilters);
 
             ResetFilters(null);
         }
 
+        private void LoadTasks()
+        {
+            Tasks = new ObservableCollection<Task>([.. _dataContext.Tasks
+                .Include(t => t.SubTasks)
+                .Include(t => t.Categories)
+                    .ThenInclude(c => c.Category)]);
+        }
+
+        private void UpdateTasks(object obj)
+        {
+            LoadTasks();
+        }
+
         public void ShowDetails(object task)
         {
             Mediator.Instance.Notify("ShowDetails", task);
+        }
+
+        private void OnTaskPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Task.Status))
+            {
+                var task = sender as Task;
+
+                _dataContext.Tasks.Update(task);
+                _dataContext.SaveChanges();
+            }
         }
 
         // Metoda wywoływana po naciśnięciu przycisku "Edit Task"
@@ -142,10 +180,7 @@ namespace Todo.MVVM.ViewModel
             _mainViewModel.EditTaskViewCommand.Execute(null);
         }
 
-        private void OnTaskAdded(object task)
-        {
-            Tasks.Add((Task)task);
-        }
+        
 
         private bool FilterTasks(object obj)
         {
