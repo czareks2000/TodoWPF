@@ -110,7 +110,7 @@ namespace Todo.MVVM.ViewModel
 
             _dataContext.SaveChanges();
 
-            Mediator.Instance.Notify("UpdateTasks", newTask);
+            Mediator.Instance.Notify("UpdateTasksList", newTask);
 
             ResetForm();
         }

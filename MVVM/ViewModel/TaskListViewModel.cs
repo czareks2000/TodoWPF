@@ -138,7 +138,7 @@ namespace Todo.MVVM.ViewModel
             LoadTasks();
             Categories = new ObservableCollection<Category>([.. _dataContext.Categories]);
 
-            Mediator.Instance.Register("UpdateTasks", UpdateTasks);
+            Mediator.Instance.Register("UpdateTasksList", UpdateTasksList);
 
             ResetFiltersCommand = new RelayCommand(ResetFilters);
 
@@ -153,7 +153,7 @@ namespace Todo.MVVM.ViewModel
                     .ThenInclude(c => c.Category)]);
         }
 
-        private void UpdateTasks(object obj)
+        private void UpdateTasksList(object obj)
         {
             LoadTasks();
         }
