@@ -23,7 +23,7 @@ namespace Todo.MVVM.View
             CategoryFilter.SelectedIndex = -1;
             StatusFilter.SelectedIndex = -1;
             PriorityFilter.SelectedIndex = -1;
-            DeadlineFilter.SelectedDate = null;
+            //DeadlineFilter.SelectedDate = null;
             SearchTextBox.Text = string.Empty;
         }
     }

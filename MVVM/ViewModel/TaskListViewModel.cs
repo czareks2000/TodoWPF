@@ -122,11 +122,16 @@ namespace Todo.MVVM.ViewModel
                 ApplyFilter();
             }
         }
-
+    
+        private void SortDirection()
+        {
+            SortAscending = !SortAscending;
+        }
         // Komendy
         public ICommand ShowEditTaskCommand { get; private set; }
         public ICommand ResetFiltersCommand { get; private set; }
 
+        public ICommand SortCommand { get; private set; }
         public TaskListViewModel(MainViewModel mainViewModel)
         {
             _mainViewModel = mainViewModel;
@@ -134,6 +139,7 @@ namespace Todo.MVVM.ViewModel
 
             // Inicjalizacja komend
             ShowEditTaskCommand = new RelayCommand(ShowEditTask);
+            SortCommand = new RelayCommand(_=>SortDirection());
 
             // Inicjalizacja kolekcji
             LoadTasks();
@@ -146,12 +152,45 @@ namespace Todo.MVVM.ViewModel
             ResetFilters(null);
         }
 
+     
+
+        //sorotowanie po dacie
+        private bool _sortAscending = true;
+        public bool SortAscending
+        {
+            get => _sortAscending;
+            set
+            {
+                if (_sortAscending != value)
+                {
+                    _sortAscending = value;
+                    OnPropertyChanged(nameof(SortAscending));
+                    ApplySorting();
+                }
+            }
+        }
+        private void ApplySorting()
+        {
+            if (_tasksView != null)
+            {
+                _tasksView.SortDescriptions.Clear();
+
+                // Sortowanie po dacie 
+                var direction = SortAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
+                _tasksView.SortDescriptions.Add(new SortDescription("Deadline", direction));
+
+                _tasksView.Refresh();
+            }
+        }
+
         private void LoadTasks()
         {
             Tasks = new ObservableCollection<Task>([.. _dataContext.Tasks
                 .Include(t => t.SubTasks)
                 .Include(t => t.Categories)
                     .ThenInclude(c => c.Category)]);
+            ApplySorting(); // Zastosuj sortowanie 
+
         }
 
         private void UpdateTasksList(object obj)
