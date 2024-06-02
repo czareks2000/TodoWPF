@@ -85,12 +85,7 @@ namespace Todo.MVVM.ViewModel
             //walidacja
             if (SelectedCategories.Count == 0)
             {
-                MessageBox.Show(
-                    "Wybierz przynajmniej jedną kategorię",
-                    "Błąd",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                MessageBox.Show("Wybierz przynajmniej jedną kategorię", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return; 
             }
 
