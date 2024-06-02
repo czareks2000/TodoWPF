@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using Todo.Core;
 using Todo.DB;
@@ -81,6 +82,13 @@ namespace Todo.MVVM.ViewModel
 
         private void SaveTask()
         {
+            //walidacja
+            if (SelectedCategories.Count == 0)
+            {
+                MessageBox.Show("Choose at least one category", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+
             var newTask = new Task
             {
                 Name = TaskName,
