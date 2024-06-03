@@ -64,12 +64,12 @@
                 </GroupBox>
             </StackPanel>
 
-            <!-- Deadline Filter -->
+            <!-- Deadline Sort -->
             <StackPanel Grid.Column="3">
-                <GroupBox Header="Deadline">
-                    <DatePicker Margin="2" Name="DeadlineFilter"
-                        SelectedDate="{Binding SelectedDeadlineFilter}"/>
-                </GroupBox>
+                <Button Style="{StaticResource BlueButton}" 
+                        Grid.Column="1" Content="deadline sort"
+                        Command="{Binding SortCommand}"
+                        Click="ResetFilters"/>
             </StackPanel>
 
         </Grid>
