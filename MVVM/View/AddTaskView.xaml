@@ -37,21 +37,21 @@
 
         <!-- Nazwa zadania -->
         <StackPanel Grid.Row="1" Margin="10, 5, 10, 5"> 
-            <TextBlock Margin="5, 0, 0, 10"  Text="Nazwa:" FontSize="13"/>
+            <TextBlock Margin="5, 0, 0, 10"  Style="{DynamicResource LabelAdd1Style}" FontSize="13"/>
             <TextBox Style="{StaticResource NewTextBox}" Name="txtName"
                      Text="{Binding TaskName, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <!-- Opis zadania -->
         <StackPanel Grid.Row="2" Margin="10, 5, 10, 5">
-            <TextBlock Margin="5, 0, 0, 10" Text="Opis:" FontSize="13"/>
+                <TextBlock Margin="5, 0, 0, 10"  Style="{DynamicResource LabelAdd2Style}" FontSize="13"/>
             <TextBox Style="{StaticResource NewTextBox}" Name="txtDescription"
                      Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <!-- Lista podzadań -->
         <StackPanel Grid.Row="3" Margin="10, 5, 10, 5" Name="stackPanelSubTasks">
-            <TextBlock Margin="5, 0, 0, 10" Text="Podzadania:" FontSize="13"/>
+                <TextBlock Margin="5, 0, 0, 10"  Style="{DynamicResource LabelAdd3Style}" FontSize="13"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -64,8 +64,8 @@
                 <!-- Przycisk do dodawania kolejnych podzadań -->
                 <Button 
                     Grid.Column="1"
-                    Style="{StaticResource BlueButton}"
-                    Content="Dodaj podzadanie" Width="150"
+                    Style="{DynamicResource AddSubtaskButtonStyle}"
+                    Width="150"
                     Click="AddSubtask_Click"
                     IsEnabled="{Binding Text, ElementName=txtSubtask, 
                     Converter={StaticResource StringNotEmptyConverter}}"/>
@@ -85,7 +85,7 @@
 
         <!-- Priorytet -->
         <StackPanel Grid.Row="4" Margin="10, 5, 10, 5">
-            <TextBlock Margin="5, 0, 10, 10" Text="Priorytet:" FontSize="13"/>
+                <TextBlock Margin="5, 0, 10, 10"  Style="{DynamicResource LabelAdd4Style}" FontSize="13"/>
             <ComboBox Name="cmbPriority"
                       Margin="5, 0, 10, 10"
                     ItemsSource="{Binding TaskPriorities}"
@@ -95,7 +95,7 @@
 
         <!-- Kategorie -->
         <StackPanel Grid.Row="5" Margin="10, 5, 10, 5">
-            <TextBlock Margin="5, 0, 0, 10" Text="Kategorie:" Grid.Row="4" FontSize="13"/>
+                <TextBlock Margin="5, 0, 0, 10"  Style="{DynamicResource LabelAdd5Style}" Grid.Row="4" FontSize="13"/>
 
             <ItemsControl d:ItemsSource="{d:SampleData}" 
                             ItemsSource="{Binding Categories}"

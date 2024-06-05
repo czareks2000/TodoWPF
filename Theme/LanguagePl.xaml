@@ -4,6 +4,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ButtonTheme.xaml"/>
         <ResourceDictionary Source="TextBoxTheme.xaml"/>
+        <ResourceDictionary Source="PillStyle.xaml"/>
+        <ResourceDictionary Source="TextBlockPill.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="TextBlock" x:Key="HeaderSettingsStyle">
         <Setter Property="Text" Value="Ustawienia" />
@@ -30,9 +32,57 @@
         <Setter Property="Content" Value="Zapisz" />
     </Style>
     <Style TargetType="TextBlock" x:Key="LabelAdd1Style">
-        <Setter Property="Text" Value="Język:" />
+        <Setter Property="Text" Value="Nazwa:" />
     </Style>
-
+    <Style TargetType="TextBlock" x:Key="LabelAdd2Style">
+        <Setter Property="Text" Value="Opis:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd3Style">
+        <Setter Property="Text" Value="Podzadania:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd4Style">
+        <Setter Property="Text" Value="Priorytet:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd5Style">
+        <Setter Property="Text" Value="Kategoria:" />
+    </Style>
+    <Style TargetType="Button" x:Key="AddSubtaskButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Dodaj podzadanie" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="HeaderDetailsStyle">
+        <Setter Property="Text" Value="Szczegóły" />
+    </Style>
+    <Style TargetType="Button" x:Key="EndButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Zakończ" />
+    </Style>
+    <Style TargetType="Button" x:Key="EditButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Edytuj" />
+    </Style>
+    <Style TargetType="Button" x:Key="DeleteButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Usuń" />
+    </Style>
+    <Style TargetType="Button" x:Key="SortButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Sortuj po deadline" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBNameStyle">
+        <Setter Property="Header" Value="Nazwa" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBDescriptionStyle">
+        <Setter Property="Header" Value="Opis" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBPriorityStyle">
+        <Setter Property="Header" Value="Priorytet" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBCategoryStyle">
+        <Setter Property="Header" Value="Kategoria" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBSubtaskStyle">
+        <Setter Property="Header" Value="Podzadania" />
+    </Style>
+    <sys:String x:Key="TaskColumnHeader">Zadanie</sys:String>
+    <sys:String x:Key="DescriptionColumnHeader">Opis</sys:String>
+    <sys:String x:Key="PriorityColumnHeader">Priorytet</sys:String>
+    <sys:String x:Key="FinishedColumnHeader">Ukończone</sys:String>
     <sys:String x:Key="YAxisTitle">Liczba zadań</sys:String>
     <sys:String x:Key="XAxisTitle">Kategoria</sys:String>
 </ResourceDictionary>
