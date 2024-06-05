@@ -29,8 +29,8 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" 
-                   Margin="10, 30, 10, 30"  
-                   Text="Utwórz nowe zadanie"
+                   Margin="10, 30, 10, 30" 
+                   Style="{DynamicResource HeaderAddTaskStyle}"
                    FontWeight="DemiBold"
                    HorizontalAlignment="Center"
                    FontSize="26"/>
@@ -119,9 +119,9 @@
         </StackPanel>
 
         <!-- Przycisk do zapisu zadania -->
-        <Button Style="{StaticResource BlueButton}"  FontWeight="Bold" 
-                Content="Zapisz" Grid.Row="7" Margin="50" Width="150"
-                Command="{Binding SaveTaskCommand}"/>
+        <Button Style="{DynamicResource SaveButtonStyle}"  FontWeight="Bold" 
+                 Grid.Row="7" Margin="50" Width="150"
+                Command="{Binding SaveTaskCommand}" Cursor="Hand"/>
     </Grid>
     </ScrollViewer>
 </UserControl>

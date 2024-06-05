@@ -3,6 +3,7 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ButtonTheme.xaml"/>
+        <ResourceDictionary Source="TextBoxTheme.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="TextBlock" x:Key="HeaderSettingsStyle">
         <Setter Property="Text" Value="Settings" />
