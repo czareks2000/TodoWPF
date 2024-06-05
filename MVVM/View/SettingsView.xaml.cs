@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Todo.MVVM.ViewModel;
 
 namespace Todo.MVVM.View
 {
@@ -23,31 +24,22 @@ namespace Todo.MVVM.View
         public SettingsView()
         {
             InitializeComponent();
-           //SetLanguage("Theme/LanguagePl.xaml");
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var comboBox = sender as ComboBox;
-            if (comboBox != null && comboBox.SelectedItem is ComboBoxItem selectedItem)
+            if (sender is ComboBox comboBox)
             {
-                switch (selectedItem.Content.ToString())
+                var selectedLanguage = comboBox.SelectedItem as ComboBoxItem;
+                if (selectedLanguage != null)
                 {
-                    case "English":
-                        SetLanguage("Theme/LanguageEn.xaml");
-                        break;
-                    case "Polski":
-                        SetLanguage("Theme/LanguagePl.xaml");
-                        break;
+                    var viewModel = DataContext as SettingsViewModel;
+                    if (viewModel != null)
+                    {
+                        viewModel.SelectedLanguage = selectedLanguage.Content.ToString();
+                    }
                 }
             }
-        }
-
-        private void SetLanguage(string resourcePath)
-        {
-            var dict = new ResourceDictionary { Source = new Uri(resourcePath, UriKind.Relative) };
-            Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(dict);
         }
     }
 }
