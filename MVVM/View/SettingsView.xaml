@@ -18,16 +18,16 @@
             <!-- Nagłówek Ustawienia -->
             <TextBlock Grid.Row="0" 
                    Margin="10, 30, 10, 30"  
-                   Text="Ustawienia"
+                   Style="{DynamicResource HeaderSettingsStyle}"
                    FontSize="26"
                    HorizontalAlignment="Center"
                    FontWeight="DemiBold"/>
 
             <!-- Dropdown z wyborem języka -->
             <StackPanel Grid.Row="1" Margin="10, 5, 10, 5" >
-                <TextBlock Margin="1, 0, 0, 10"  Text="Język:" FontSize="13" />
-                <ComboBox HorizontalAlignment="Left" Width="200" Margin="0,0,0,10">
-                    <ComboBoxItem Content="Polski" IsSelected="true"/>
+                <TextBlock Margin="1, 0, 0, 10"  Style="{DynamicResource LabelSettingsStyle}" FontSize="13" />
+                <ComboBox HorizontalAlignment="Left" Width="200" Margin="0,0,0,10" SelectionChanged="ComboBox_SelectionChanged" >
+                    <ComboBoxItem Content="Polski" />
                     <ComboBoxItem Content="English" />
                 </ComboBox>
             </StackPanel>

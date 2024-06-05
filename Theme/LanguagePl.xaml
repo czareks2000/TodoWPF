@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ButtonTheme.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="TextBlock" x:Key="HeaderSettingsStyle">
+        <Setter Property="Text" Value="Ustawienia" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelSettingsStyle">
+        <Setter Property="Text" Value="Język:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="HeaderAddTaskStyle">
+        <Setter Property="Text" Value="Utwórz nowe zadanie" />
+    </Style>
+    <Style TargetType="Button" x:Key="ResetButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Resetuj filtry" />
+    </Style>
+    <Style TargetType="Button" x:Key="AddButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Dodaj zadanie" />
+    </Style>
+    <Style TargetType="Button" x:Key="StatisticButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Statystyki" />
+    </Style>
+    <Style TargetType="Button" x:Key="SettingsButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Ustawienia" />
+    </Style>
+    <Style TargetType="Button" x:Key="SaveButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Zapisz" />
+    </Style>
+
+    <sys:String x:Key="YAxisTitle">Liczba zadań</sys:String>
+    <sys:String x:Key="XAxisTitle">Kategoria</sys:String>
+</ResourceDictionary>

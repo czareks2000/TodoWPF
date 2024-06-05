@@ -23,6 +23,31 @@ namespace Todo.MVVM.View
         public SettingsView()
         {
             InitializeComponent();
+           //SetLanguage("Theme/LanguagePl.xaml");
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox != null && comboBox.SelectedItem is ComboBoxItem selectedItem)
+            {
+                switch (selectedItem.Content.ToString())
+                {
+                    case "English":
+                        SetLanguage("Theme/LanguageEn.xaml");
+                        break;
+                    case "Polski":
+                        SetLanguage("Theme/LanguagePl.xaml");
+                        break;
+                }
+            }
+        }
+
+        private void SetLanguage(string resourcePath)
+        {
+            var dict = new ResourceDictionary { Source = new Uri(resourcePath, UriKind.Relative) };
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(dict);
         }
     }
 }

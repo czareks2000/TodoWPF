@@ -88,9 +88,9 @@
                      Text="{Binding SearchBoxFilter, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- Reset Button -->
-            <Button Style="{StaticResource BlueButton}" 
+            <Button Style="{DynamicResource ResetButtonStyle}" 
                     Background="LightGray"
-                    Grid.Column="1" Content="Resetuj filtry"
+                    Grid.Column="1" 
                     Command="{Binding ResetFiltersCommand}"
                     Click="ResetFilters"/>
         </Grid>
