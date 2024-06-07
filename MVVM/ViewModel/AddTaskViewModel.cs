@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Todo.Core;
 using Todo.DB;
@@ -83,7 +84,13 @@ namespace Todo.MVVM.ViewModel
         private void SaveTask()
         {
             //walidacja
-            if (SelectedCategories.Count == 0)
+            if (string.IsNullOrEmpty(TaskName))
+            {
+                MessageBox.Show("Wprowadź nazwę.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+
+            }
+            if (SelectedCategories.Count==0)
             {
                 MessageBox.Show("Wybierz przynajmniej jedną kategorię", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return; 
@@ -114,6 +121,7 @@ namespace Todo.MVVM.ViewModel
 
             newTask.Categories = newTaskCategories;
 
+
             _dataContext.Tasks.Add(newTask);
 
             _dataContext.SaveChanges();
@@ -128,9 +136,13 @@ namespace Todo.MVVM.ViewModel
             TaskName = string.Empty;
             TaskDescription = string.Empty;
             SelectedPriority = TaskPriority.Low;
-            SelectedCategories.Clear();
             Deadline = DateTime.UtcNow;
             Subtasks.Clear();
+            SelectedCategories.Clear();
+
+            var refreshedCategories = new ObservableCollection<Category>(Categories);
+            Categories = refreshedCategories;
         }
+
     }
 }
