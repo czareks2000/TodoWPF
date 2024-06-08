@@ -134,7 +134,8 @@
                     Margin="5" Padding="5" Width="75"/>
             <Button Content="Edytuj" 
                     Style="{StaticResource BlueButton}"
-                    Command="{Binding EditTaskCommand}" 
+                    Command="{Binding EditTaskCommand}"
+                    IsEnabled="{Binding IsTaskEditable}"
                     Margin="5" Padding="5" Width="75"/>
             <Button Content="Usuń" 
                     Style="{StaticResource BlueButton}"
