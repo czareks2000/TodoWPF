@@ -1,4 +1,7 @@
-﻿namespace Todo.MVVM.Model
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Todo.MVVM.Model
 {
     public class Category
     {
@@ -6,5 +9,6 @@
         public string Name { get; set; }
 
         public virtual ICollection<TaskCategory> Tasks { get; set; }
+
     }
 }
