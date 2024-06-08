@@ -12,9 +12,9 @@ namespace Todo
 
         public MainWindow()
         {
+            //Seed.SeedData(_context);
             InitializeComponent();
 
-            //Seed.SeedData(_context);
         }
     }
 }

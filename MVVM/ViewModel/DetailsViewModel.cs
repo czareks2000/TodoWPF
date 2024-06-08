@@ -17,9 +17,12 @@ namespace Todo.MVVM.ViewModel
             set
             {
                 _selectedTask = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(IsTaskEditable));
-
+                
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsTaskEditable));
+                
+               /* if (_selectedTask == null)
+                    Mediator.Instance.Notify("ChangeView", null);*/
             }
         }
         public bool IsTaskEditable => SelectedTask != null && SelectedTask.Status != Model.Enums.TaskStatus.Done;
@@ -63,6 +66,8 @@ namespace Todo.MVVM.ViewModel
                 OnPropertyChanged(nameof(SelectedTask));
                 OnPropertyChanged(nameof(IsTaskEditable));
                 Mediator.Instance.Notify("UpdateTasksList", null);
+                Mediator.Instance.Notify("ChangeViewToAddTask", null);
+
             }
         }
 

@@ -62,6 +62,7 @@ namespace Todo.MVVM.ViewModel
 
             Mediator.Instance.Register("ShowDetails", task => ShowDetails((Task)task));
 
+
             AddTaskViewCommand = new RelayCommand(o =>
             {
                 RightView = AddTaskVM;
@@ -87,9 +88,15 @@ namespace Todo.MVVM.ViewModel
 
         private void ShowDetails(Task task)
         {
+            if (task == null)
+            {
+                RightView = AddTaskVM;
+                return;
+            }
             DetailsVM.SelectedTask = task;
             RightView = DetailsVM;
         }
+
 
         private void ExportData(object obj)
         {
@@ -180,5 +187,6 @@ namespace Todo.MVVM.ViewModel
         {
             return (int)(mm / 25.4 * dpi);
         }
+
     }
 }
