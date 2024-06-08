@@ -23,10 +23,10 @@
                     Margin="20"
                     FontWeight="DemiBold">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Kategoria" />
+                    <lvc:Axis Title="{DynamicResource XAxisTitle}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Liczba zadań" />
+                    <lvc:Axis Title="{DynamicResource YAxisTitle}" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
 

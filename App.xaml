@@ -12,6 +12,9 @@
                 <ResourceDictionary Source="Theme/TextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/PillStyle.xaml"/>
                 <ResourceDictionary Source="Theme/TextBlockPill.xaml"/>
+                <ResourceDictionary Source="Theme/LanguagePl.xaml"/>
+                <ResourceDictionary Source="Theme/LanguageEn.xaml"/>
+                
             </ResourceDictionary.MergedDictionaries>
             
             

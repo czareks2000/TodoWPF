@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Todo.MVVM.ViewModel;
 
 namespace Todo.MVVM.View
 {
@@ -23,6 +24,22 @@ namespace Todo.MVVM.View
         public SettingsView()
         {
             InitializeComponent();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                var selectedLanguage = comboBox.SelectedItem as ComboBoxItem;
+                if (selectedLanguage != null)
+                {
+                    var viewModel = DataContext as SettingsViewModel;
+                    if (viewModel != null)
+                    {
+                        viewModel.SelectedLanguage = selectedLanguage.Content.ToString();
+                    }
+                }
+            }
         }
     }
 }

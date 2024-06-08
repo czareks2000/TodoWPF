@@ -10,12 +10,12 @@
              d:DataContext="{d:DesignInstance Type={x:Type viewmodel:TaskListViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="640">
-    
+
     <UserControl.Resources>
         <converters:DateOnlyConverter x:Key="DateOnlyConverter"/>
         <converters:TaskStatusToBoolConverter x:Key="TaskStatusToBoolConverter"/>
     </UserControl.Resources>
-    
+
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -34,14 +34,14 @@
 
             <!-- Category Filter -->
             <StackPanel Grid.Column="0">
-                <GroupBox Header="Category">
+                <GroupBox Style="{DynamicResource GBCategoryStyle}">
                     <ComboBox Margin="3" Name="CategoryFilter"
                     ItemsSource="{Binding Categories}" DisplayMemberPath="Name"
                     SelectedItem="{Binding SelectedCategoryFilter}">
                     </ComboBox>
                 </GroupBox>
             </StackPanel>
-            
+
 
             <!-- Completion Status Filter -->
             <StackPanel Grid.Column="1">
@@ -52,11 +52,11 @@
                     </ComboBox>
                 </GroupBox>
             </StackPanel>
-            
+
 
             <!-- Priority Filter -->
             <StackPanel Grid.Column="2">
-                <GroupBox Header="Priority">
+                <GroupBox Style="{DynamicResource GBPriorityStyle}">
                     <ComboBox Margin="3" Name="PriorityFilter"
                         ItemsSource="{Binding TaskPriorities}"
                         SelectedItem="{Binding SelectedPriorityFilter}">
@@ -66,10 +66,10 @@
 
             <!-- Deadline Sort -->
             <StackPanel Grid.Column="3">
-                <Button Style="{StaticResource BlueButton}" 
-                        Grid.Column="1" Content="deadline sort"
+                <Button Style="{DynamicResource SortButtonStyle}" 
+                        Grid.Column="1"
                         Command="{Binding SortCommand}"
-                        Click="ResetFilters"/>
+                        />
             </StackPanel>
 
         </Grid>
@@ -88,9 +88,9 @@
                      Text="{Binding SearchBoxFilter, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- Reset Button -->
-            <Button Style="{StaticResource BlueButton}" 
+            <Button Style="{DynamicResource ResetButtonStyle}" 
                     Background="LightGray"
-                    Grid.Column="1" Content="Resetuj filtry"
+                    Grid.Column="1" 
                     Command="{Binding ResetFiltersCommand}"
                     Click="ResetFilters"/>
         </Grid>
@@ -104,7 +104,7 @@
                 <!-- Define columns for task properties -->
                 <GridView>
                     <!-- Checkbox column -->
-                    <GridViewColumn Width="Auto" Header="Ukończone">
+                    <GridViewColumn Width="65" Header="{DynamicResource FinishedColumnHeader}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox   
@@ -115,13 +115,13 @@
                     </GridViewColumn>
 
                     <!-- Task Name column -->
-                    <GridViewColumn Header="Zadanie" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="{DynamicResource TaskColumnHeader}" DisplayMemberBinding="{Binding Name}"/>
 
                     <!-- Task Description column -->
-                    <GridViewColumn Header="Opis" DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="{DynamicResource DescriptionColumnHeader}" DisplayMemberBinding="{Binding Description}"/>
 
                     <!-- Priority column -->
-                    <GridViewColumn Header="Priorytet" DisplayMemberBinding="{Binding Priority}"/>
+                    <GridViewColumn Header="{DynamicResource PriorityColumnHeader}" DisplayMemberBinding="{Binding Priority}"/>
 
                     <!-- Deadline column -->
                     <GridViewColumn Header="Deadline" 
