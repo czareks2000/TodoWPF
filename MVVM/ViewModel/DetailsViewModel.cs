@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Todo.Core;
 using Todo.DB;
+using Todo.MVVM.Model;
 using Task = Todo.MVVM.Model.Task;
 
 namespace Todo.MVVM.ViewModel
@@ -78,11 +79,31 @@ namespace Todo.MVVM.ViewModel
         }
         public void SubTaskChecked(object sender)
         {
+            if (sender is SubTask subTask)
+            {
+                subTask.Status = Model.Enums.TaskStatus.Done;
+                var subTaskToUpdate = _dataContext.SubTasks.FirstOrDefault(s => s.Id == subTask.Id);
+                if (subTaskToUpdate != null)
+                {
+                    subTaskToUpdate.Status = Model.Enums.TaskStatus.Done;
+                    _dataContext.SaveChanges();
+                }
+            }
             CheckIfAllSubTasksComplete(null);
         }
 
         public void SubTaskUnchecked(object sender)
         {
+            if (sender is SubTask subTask)
+            {
+                subTask.Status = Model.Enums.TaskStatus.InProgress;
+                var subTaskToUpdate = _dataContext.SubTasks.FirstOrDefault(s => s.Id == subTask.Id);
+                if (subTaskToUpdate != null)
+                {
+                    subTaskToUpdate.Status = Model.Enums.TaskStatus.InProgress;
+                    _dataContext.SaveChanges();
+                }
+            }
             CheckIfAllSubTasksComplete(null);
         }
     }
