@@ -35,13 +35,13 @@
                 <WrapPanel Grid.Row="1"  >
                     <Button 
                             Command="{Binding AddTaskViewCommand}"
-                            Style="{StaticResource BlueButton}">Dodaj zadanie</Button>
+                            Style="{DynamicResource AddButtonStyle}"></Button>
                     <Button
                             Command="{Binding StatsViewCommand}"
-                            Style="{StaticResource BlueButton}">Statystyki</Button>
+                            Style="{DynamicResource StatisticButtonStyle}"></Button>
                     <Button 
                             Command="{Binding SettingsViewCommand}"
-                            Style="{StaticResource BlueButton}">Ustawienia</Button>
+                            Style="{DynamicResource SettingsButtonStyle}"></Button>
                     <Button 
                             Command="{Binding ExportCommand}"
                             Style="{StaticResource BlueButton}">Export</Button>

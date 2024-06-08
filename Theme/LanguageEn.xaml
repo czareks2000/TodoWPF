@@ -1,0 +1,88 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ButtonTheme.xaml"/>
+        <ResourceDictionary Source="TextBoxTheme.xaml"/>
+        <ResourceDictionary Source="PillStyle.xaml"/>
+        <ResourceDictionary Source="TextBlockPill.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="TextBlock" x:Key="HeaderSettingsStyle">
+        <Setter Property="Text" Value="Settings" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelSettingsStyle">
+        <Setter Property="Text" Value="Language:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="HeaderAddTaskStyle">
+        <Setter Property="Text" Value="Create new task" />
+    </Style>
+    <Style TargetType="Button" x:Key="ResetButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Reset filters" />
+    </Style>
+    <Style TargetType="Button" x:Key="AddButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Add task" />
+    </Style>
+    <Style TargetType="Button" x:Key="StatisticButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Statistics" />
+    </Style>
+    <Style TargetType="Button" x:Key="SettingsButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Settings" />
+    </Style>
+    <Style TargetType="Button" x:Key="SaveButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Save" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd1Style">
+        <Setter Property="Text" Value="Name:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd2Style">
+        <Setter Property="Text" Value="Description:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd3Style">
+        <Setter Property="Text" Value="Subtasks:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd4Style">
+        <Setter Property="Text" Value="Priority:" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="LabelAdd5Style">
+        <Setter Property="Text" Value="Categories:" />
+    </Style>
+    <Style TargetType="Button" x:Key="AddSubtaskButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Add substask" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="HeaderDetailsStyle">
+        <Setter Property="Text" Value="Details" />
+    </Style>
+    <Style TargetType="Button" x:Key="EndButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Finish" />
+    </Style>
+    <Style TargetType="Button" x:Key="EditButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Edit" />
+    </Style>
+    <Style TargetType="Button" x:Key="DeleteButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Delete" />
+    </Style>
+    <Style TargetType="Button" x:Key="SortButtonStyle" BasedOn="{StaticResource BlueButton}">
+        <Setter Property="Content" Value="Deadline sort" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBNameStyle">
+        <Setter Property="Header" Value="Name" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBDescriptionStyle">
+        <Setter Property="Header" Value="Description" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBPriorityStyle">
+        <Setter Property="Header" Value="Priority" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBCategoryStyle">
+        <Setter Property="Header" Value="Category" />
+    </Style>
+    <Style TargetType="GroupBox" x:Key="GBSubtaskStyle">
+        <Setter Property="Header" Value="Subtasks" />
+    </Style>
+    <sys:String x:Key="TaskColumnHeader">Task</sys:String>
+    <sys:String x:Key="DescriptionColumnHeader">Description</sys:String>
+    <sys:String x:Key="PriorityColumnHeader">Priority</sys:String>
+    <sys:String x:Key="FinishedColumnHeader">Finished</sys:String>
+    <sys:String x:Key="YAxisTitle">Number of tasks</sys:String>
+    <sys:String x:Key="XAxisTitle">Category</sys:String>
+</ResourceDictionary>

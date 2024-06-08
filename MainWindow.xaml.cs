@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Todo.DB;
+using Todo.MVVM.ViewModel;
 
 namespace Todo
 {
@@ -13,7 +14,6 @@ namespace Todo
         public MainWindow()
         {
             InitializeComponent();
-
             //Seed.SeedData(_context);
         }
     }
