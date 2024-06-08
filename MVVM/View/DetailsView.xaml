@@ -115,7 +115,9 @@
                             <CheckBox Content="{Binding Name}" 
                                       IsChecked="{Binding Status, 
                                             Converter={StaticResource TaskStatusToBoolConverter}}"
-                                      Margin="0, 2">
+                                      Margin="0, 2"
+                                      Checked="SubTaskChecked"
+                                      Unchecked="SubTaskUnchecked">
                             </CheckBox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

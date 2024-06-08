@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿﻿using System.Windows;
 using System.Windows.Input;
 using Todo.Core;
 using Todo.DB;
@@ -34,7 +34,6 @@ namespace Todo.MVVM.ViewModel
             DeleteTaskCommand = new RelayCommand(DeleteTask);
             MarkAsCompletedCommand = new RelayCommand(MarkAsCompleted, obj=>IsTaskEditable);
 
-
         }
 
         private void DeleteTask(object obj)
@@ -65,6 +64,21 @@ namespace Todo.MVVM.ViewModel
                 OnPropertyChanged(nameof(IsTaskEditable));
                 Mediator.Instance.Notify("UpdateTasksList", null);
             }
+        }
+
+        private void CheckIfAllSubTasksComplete(object obj){
+            if(SelectedTask != null && SelectedTask.SubTasks.All(st=>st.Status==Model.Enums.TaskStatus.Done ))
+            { MarkAsCompleted(null); }
+           
+        }
+        public void SubTaskChecked(object sender)
+        {
+            CheckIfAllSubTasksComplete(null);
+        }
+
+        public void SubTaskUnchecked(object sender)
+        {
+            CheckIfAllSubTasksComplete(null);
         }
     }
 }
