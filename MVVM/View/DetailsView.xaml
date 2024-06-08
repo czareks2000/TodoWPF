@@ -115,7 +115,9 @@
                             <CheckBox Content="{Binding Name}" 
                                       IsChecked="{Binding Status, 
                                             Converter={StaticResource TaskStatusToBoolConverter}}"
-                                      Margin="0, 2">
+                                      Margin="0, 2"
+                                      Checked="SubTaskChecked"
+                                      Unchecked="SubTaskUnchecked">
                             </CheckBox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -132,9 +134,11 @@
                     Style="{DynamicResource EndButtonStyle}"
                     Command="{Binding MarkAsCompletedCommand}" 
                     Margin="5" Padding="5" Width="75"/>
+
             <Button 
                     Style="{DynamicResource EditButtonStyle}"
                     Command="{Binding EditTaskCommand}" 
+                    IsEnabled="{Binding IsTaskEditable}"
                     Margin="5" Padding="5" Width="75"/>
             <Button  
                     Style="{DynamicResource DeleteButtonStyle}"
