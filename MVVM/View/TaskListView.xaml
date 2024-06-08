@@ -10,12 +10,12 @@
              d:DataContext="{d:DesignInstance Type={x:Type viewmodel:TaskListViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="640">
-    
+
     <UserControl.Resources>
         <converters:DateOnlyConverter x:Key="DateOnlyConverter"/>
         <converters:TaskStatusToBoolConverter x:Key="TaskStatusToBoolConverter"/>
     </UserControl.Resources>
-    
+
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -41,7 +41,7 @@
                     </ComboBox>
                 </GroupBox>
             </StackPanel>
-            
+
 
             <!-- Completion Status Filter -->
             <StackPanel Grid.Column="1">
@@ -52,7 +52,7 @@
                     </ComboBox>
                 </GroupBox>
             </StackPanel>
-            
+
 
             <!-- Priority Filter -->
             <StackPanel Grid.Column="2">
@@ -69,7 +69,7 @@
                 <Button Style="{DynamicResource SortButtonStyle}" 
                         Grid.Column="1"
                         Command="{Binding SortCommand}"
-                        Click="ResetFilters"/>
+                        />
             </StackPanel>
 
         </Grid>
