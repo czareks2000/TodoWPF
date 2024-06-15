@@ -10,6 +10,9 @@
     <Style TargetType="TextBlock" x:Key="HeaderSettingsStyle">
         <Setter Property="Text" Value="Ustawienia" />
     </Style>
+    <Style TargetType="TextBlock" x:Key="HeaderEditStyle">
+        <Setter Property="Text" Value="Edycja zadania" />
+    </Style>
     <Style TargetType="TextBlock" x:Key="LabelSettingsStyle">
         <Setter Property="Text" Value="Język:" />
     </Style>
