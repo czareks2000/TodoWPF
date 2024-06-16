@@ -110,7 +110,7 @@ namespace Todo.MVVM.ViewModel
                 }
 
                 // Aktualizacja kategorii
-                //SelectedTask.Categories.Clear();
+                SelectedTask.Categories.Clear();
                 foreach (var category in SelectedCategories)
                 {
                     var existingCategory = _dataContext.Categories.FirstOrDefault(c => c.Id == category.Id);
