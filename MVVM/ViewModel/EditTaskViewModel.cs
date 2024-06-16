@@ -101,11 +101,6 @@ namespace Todo.MVVM.ViewModel
                 }
                 SelectedTask.Deadline = DateTime.SpecifyKind(SelectedTask.Deadline, DateTimeKind.Utc);
 
-                // Aktualizacja podzadań
-                foreach (var name in Subtasks)
-                {
-                    SelectedTask.SubTasks.Add(new SubTask { Name = name });
-                }
 
                 // Aktualizacja kategorii
                 SelectedTask.Categories.Clear();
@@ -130,9 +125,6 @@ namespace Todo.MVVM.ViewModel
                     MessageBoxButton.OK
                 );
             }
-
-
-
         }
         private void DeleteTask(object obj)
         {

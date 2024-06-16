@@ -76,20 +76,30 @@
         </StackPanel>
 
         <!-- Kategorie -->
-        <StackPanel Grid.Row="5" Margin="10, 5, 10, 5">
-            <GroupBox Style="{DynamicResource GBCategoryStyle}" Grid.Row="4" FontSize="13">
-                <ItemsControl d:ItemsSource="{d:SampleData}" 
-                ItemsSource="{Binding Categories}"
-                Margin="10">
+        <GroupBox Grid.Row="5" Style="{DynamicResource GBCategoryStyle}" Margin="10, 5, 10, 5">
+            <ItemsControl 
+                    Grid.Row="1"
+                    d:ItemsSource="{d:SampleData}" 
+                    ItemsSource="{Binding SelectedTask.Categories}"
+                    Margin="0,5,0,5">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                            <CheckBox Content="{Binding Name}"  Margin="0, 2">
-                        </CheckBox>
+                        <Border Style="{StaticResource PillStyle}">
+                            <TextBlock 
+                                Text="{Binding Category.Name}"
+                                Margin="5"
+                                Style="{StaticResource TextBlockPill}"/>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            </GroupBox>
-        </StackPanel>
+        </GroupBox>
+
 
         <!-- Deadline -->
         <StackPanel Grid.Row="6" Margin="10, 5, 10, 5">

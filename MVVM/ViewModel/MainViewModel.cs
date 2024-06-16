@@ -109,7 +109,6 @@ namespace Todo.MVVM.ViewModel
 
         }
 
-
         private void ExportData(object obj)
         {
             // Show save file dialog

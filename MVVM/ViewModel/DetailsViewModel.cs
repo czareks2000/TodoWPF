@@ -65,7 +65,6 @@ namespace Todo.MVVM.ViewModel
                 _dataContext.SaveChanges();
                 OnPropertyChanged(nameof(SelectedTask));
                 OnPropertyChanged(nameof(IsTaskEditable));
-                CommandManager.InvalidateRequerySuggested(); // Invalidate commands
                 Mediator.Instance.Notify("UpdateTasksList", null);
                 Mediator.Instance.Notify("ChangeViewToAddTask", null);
             }
