@@ -21,15 +21,13 @@ namespace Todo.MVVM.ViewModel
                 
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(IsTaskEditable));
-                
-               /* if (_selectedTask == null)
-                    Mediator.Instance.Notify("ChangeView", null);*/
             }
         }
         public bool IsTaskEditable => SelectedTask != null && SelectedTask.Status != Model.Enums.TaskStatus.Done;
 
         public ICommand DeleteTaskCommand { get; private set; }
         public ICommand MarkAsCompletedCommand { get; private set; }
+        public ICommand EditTaskCommand { get; private set; }
 
         public DetailsViewModel() 
         {
@@ -37,6 +35,7 @@ namespace Todo.MVVM.ViewModel
 
             DeleteTaskCommand = new RelayCommand(DeleteTask);
             MarkAsCompletedCommand = new RelayCommand(MarkAsCompleted, obj=>IsTaskEditable);
+            EditTaskCommand = new RelayCommand(EditTask);
 
         }
 
@@ -70,6 +69,10 @@ namespace Todo.MVVM.ViewModel
                 Mediator.Instance.Notify("ChangeViewToAddTask", null);
 
             }
+        }
+        private void EditTask(object obj)
+        {
+               Mediator.Instance.Notify("ChangeViewToEditTask", SelectedTask);
         }
 
         private void CheckIfAllSubTasksComplete(object obj){

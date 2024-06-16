@@ -23,7 +23,6 @@ namespace Todo.MVVM.ViewModel
 
         public Array TaskPriorities => Enum.GetValues(typeof(TaskPriority));
 
-        // pola formularza
         private string _taskName;
         public string TaskName
         {
@@ -86,13 +85,13 @@ namespace Todo.MVVM.ViewModel
             //walidacja
             if (string.IsNullOrEmpty(TaskName))
             {
-                MessageBox.Show("Wprowadź nazwę.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Enter a name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
 
             }
             if (SelectedCategories.Count==0)
             {
-                MessageBox.Show("Wybierz przynajmniej jedną kategorię", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select at least one category.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return; 
             }
 

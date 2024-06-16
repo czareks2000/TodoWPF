@@ -61,6 +61,7 @@ namespace Todo.MVVM.ViewModel
             RightView = AddTaskVM;
 
             Mediator.Instance.Register("ShowDetails", task => ShowDetails((Task)task));
+            Mediator.Instance.Register("ChangeViewToEditTask", task => ShowEdit((Task)task));
 
 
             AddTaskViewCommand = new RelayCommand(o =>
@@ -95,6 +96,17 @@ namespace Todo.MVVM.ViewModel
             }
             DetailsVM.SelectedTask = task;
             RightView = DetailsVM;
+        }
+        private void ShowEdit(Task task)
+        {
+            if (task == null)
+            {
+                RightView = AddTaskVM;
+                return;
+            }
+            EditTaskVM.SelectedTask= task;
+            RightView = EditTaskVM;
+
         }
 
 
