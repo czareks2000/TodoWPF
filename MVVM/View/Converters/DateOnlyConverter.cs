@@ -16,7 +16,15 @@ namespace Todo.MVVM.View.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value is string strValue)
+            {
+                if (DateTime.TryParseExact(strValue, "d", culture, DateTimeStyles.None, out DateTime result))
+                {
+                    return result;
+                }
+            }
+
+            return value;
         }
     }
 }

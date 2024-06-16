@@ -94,7 +94,7 @@
         <!-- Deadline -->
         <StackPanel Grid.Row="6" Margin="10, 5, 10, 5">
             <TextBlock Margin="5, 0, 0, 10" Text="Deadline:" Grid.Row="5" FontSize="13" />
-            <DatePicker Grid.Row="5" Name="dpDeadline" Text="{Binding SelectedTask.Deadline, Converter={StaticResource DateOnlyConverter}}"/>
+            <DatePicker Grid.Row="5" Name="dpDeadline" SelectedDate="{Binding SelectedTask.Deadline,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}"/>
         </StackPanel>
 
         <!-- Przyciski do operacji na zadaniu -->

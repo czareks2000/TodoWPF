@@ -99,9 +99,7 @@ namespace Todo.MVVM.ViewModel
                     return;
 
                 }
-               SelectedTask.Deadline = Deadline;
-                //Deadline = SelectedTask.Deadline;
-                //Deadline = DateTime.SpecifyKind(SelectedTask.Deadline, DateTimeKind.Utc);
+                SelectedTask.Deadline = DateTime.SpecifyKind(SelectedTask.Deadline, DateTimeKind.Utc);
 
                 // Aktualizacja podzadań
                 foreach (var name in Subtasks)
