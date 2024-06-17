@@ -61,6 +61,7 @@ namespace Todo.MVVM.ViewModel
             RightView = AddTaskVM;
 
             Mediator.Instance.Register("ShowDetails", task => ShowDetails((Task)task));
+            Mediator.Instance.Register("ChangeViewToEditTask", task => ShowEdit((Task)task));
 
 
             AddTaskViewCommand = new RelayCommand(o =>
@@ -96,7 +97,17 @@ namespace Todo.MVVM.ViewModel
             DetailsVM.SelectedTask = task;
             RightView = DetailsVM;
         }
+        private void ShowEdit(Task task)
+        {
+            if (task == null)
+            {
+                RightView = AddTaskVM;
+                return;
+            }
+            EditTaskVM.SelectedTask= task;
+            RightView = EditTaskVM;
 
+        }
 
         private void ExportData(object obj)
         {
@@ -136,13 +147,13 @@ namespace Todo.MVVM.ViewModel
                         gfx.DrawString($"Task: {task.Name} ({(task.Status == TaskStatus.Done ? "Done" : "InProgress")})", titleFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
                         yPos += 5; 
 
-                        gfx.DrawString($"Priorytet: {task.Priority}", normalFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
+                        gfx.DrawString($"Priority: {task.Priority}", normalFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
                         yPos += 5; 
 
                         gfx.DrawString($"Deadline: {task.Deadline:dd/MM/yyyy}", normalFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
                         yPos += 5; 
 
-                        gfx.DrawString($"Kategorie:", normalFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
+                        gfx.DrawString($"Categories:", normalFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
                         yPos += 5; 
 
                         foreach (var category in task.Categories)
@@ -151,7 +162,7 @@ namespace Todo.MVVM.ViewModel
                             yPos += 5;
                         }
 
-                        gfx.DrawString($"Podzadania:", normalFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
+                        gfx.DrawString($"Subtasks:", normalFont, XBrushes.Black, new XRect(50, MmToPixel(yPos), page.Width, page.Height), XStringFormats.TopLeft);
                         yPos += 5;
 
                         foreach (var subtask in task.SubTasks)
@@ -173,7 +184,7 @@ namespace Todo.MVVM.ViewModel
                         // Show completion message using Dispatcher
                         Dispatcher.CurrentDispatcher.Invoke(() =>
                         {
-                            MessageBox.Show("Pomyślnie exportowano plik.", "Export zakończony", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("The file was successfully exported.", "Export completed.", MessageBoxButton.OK, MessageBoxImage.Information);
                         });
                     });
 

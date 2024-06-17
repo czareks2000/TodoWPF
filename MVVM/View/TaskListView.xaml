@@ -68,6 +68,7 @@
             <StackPanel Grid.Column="3">
                 <Button Style="{DynamicResource SortButtonStyle}" 
                         Grid.Column="1"
+                        Margin="15"
                         Command="{Binding SortCommand}"
                         />
             </StackPanel>
