@@ -14,7 +14,7 @@ namespace Todo
         public MainWindow()
         {
             InitializeComponent();
-            //Seed.SeedData(_context);
+            Seed.SeedData(_context);
         }
     }
 }

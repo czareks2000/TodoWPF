@@ -208,7 +208,11 @@ namespace Todo.MVVM.ViewModel
         {
             if (e.PropertyName == nameof(Task.Status))
             {
-                var task = sender as Task;
+                var taskSender = sender as Task;
+
+                var task = _dataContext.Tasks.FirstOrDefault(t => t.Id == taskSender.Id);
+
+                task.Status = taskSender.Status;
 
                 _dataContext.Tasks.Update(task);
                 _dataContext.SaveChanges();

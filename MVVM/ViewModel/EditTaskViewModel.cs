@@ -101,19 +101,16 @@ namespace Todo.MVVM.ViewModel
                 }
                 SelectedTask.Deadline = DateTime.SpecifyKind(SelectedTask.Deadline, DateTimeKind.Utc);
 
-
                 // Aktualizacja kategorii
-                SelectedTask.Categories.Clear();
-                foreach (var category in SelectedCategories)
-                {
-                    var existingCategory = _dataContext.Categories.FirstOrDefault(c => c.Id == category.Id);
-                    if (existingCategory != null)
-                    {
-                        SelectedTask.Categories.Add(new TaskCategory { Category = existingCategory });
-                    }
-                }
+                //SelectedTask.Categories.Clear();
 
-                _dataContext.Tasks.Update(SelectedTask);
+                var task = _dataContext.Tasks.FirstOrDefault(t => t.Id == SelectedTask.Id);
+
+                task.Name = TaskName;
+                task.Description = TaskDescription;
+                task.Priority = SelectedPriority;
+
+                _dataContext.Tasks.Update(task);
                 _dataContext.SaveChanges();
 
                 Mediator.Instance.Notify("UpdateEditTask", SelectedTask);
@@ -138,7 +135,9 @@ namespace Todo.MVVM.ViewModel
                 );
             if (result == MessageBoxResult.Yes)
             {
-                _dataContext.Tasks.Remove(SelectedTask);
+                var task = _dataContext.Tasks.FirstOrDefault(t => t.Id == SelectedTask.Id);
+
+                _dataContext.Tasks.Remove(task);
                 _dataContext.SaveChanges();
 
                 Mediator.Instance.Notify("UpdateTasksList", null);

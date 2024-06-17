@@ -50,7 +50,9 @@ namespace Todo.MVVM.ViewModel
                 );
             if (result == MessageBoxResult.Yes)
             {
-                _dataContext.Tasks.Remove(SelectedTask);
+                var task = _dataContext.Tasks.FirstOrDefault(t => t.Id == SelectedTask.Id);
+
+                _dataContext.Tasks.Remove(task);
                 _dataContext.SaveChanges();
 
                 Mediator.Instance.Notify("UpdateTasksList", null);
@@ -61,7 +63,11 @@ namespace Todo.MVVM.ViewModel
         {
             if (SelectedTask != null)
             {
+                var task = _dataContext.Tasks.FirstOrDefault(t => t.Id == SelectedTask.Id);
+
+                task.Status = Model.Enums.TaskStatus.Done;
                 SelectedTask.Status = Model.Enums.TaskStatus.Done;
+
                 _dataContext.SaveChanges();
                 OnPropertyChanged(nameof(SelectedTask));
                 OnPropertyChanged(nameof(IsTaskEditable));
