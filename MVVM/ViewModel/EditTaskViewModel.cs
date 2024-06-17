@@ -124,6 +124,7 @@ namespace Todo.MVVM.ViewModel
                     "Notification",
                     MessageBoxButton.OK
                 );
+                Mediator.Instance.Notify("ShowDetails", SelectedTask);
             }
         }
         private void DeleteTask(object obj)
